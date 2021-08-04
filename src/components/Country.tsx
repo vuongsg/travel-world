@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import './Country.scss';
-import { Grid } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,31 +50,38 @@ export const Country = (): ReactElement => {
      */
     const renderCountriesList = () => {
         return (
-            <List component="nav" aria-label="main mailbox folders">
-                {countryState.countries.map((m: CountryModel, index: number) => 
-                    <ListItem button selected={countryState.selectedCountry === index} onClick={(event) => handleSelectCountry(event, index)}>
-                        <ListItemIcon>
-                            <img src={m.flag} alt={m.name} style={{maxWidth: '30px', maxHeight: '30px', objectFit: 'cover'}} />
-                        </ListItemIcon>
-                        <ListItemText primary={m.name} />
-                    </ListItem>
-                )}
-            </List>
+            <Paper id='paper-countries-list' style={{ maxHeight: 700, overflow: 'auto' }}>
+                <List component="nav" aria-label="countries list">
+                    {countryState.countries.map((m: CountryModel, index: number) =>
+                        <ListItem button selected={countryState.selectedCountry === index} onClick={(event) => handleSelectCountry(event, index)}>
+                            <ListItemIcon>
+                                <img src={m.flag} alt={m.name} style={{ maxWidth: '30px', maxHeight: '30px', objectFit: 'cover' }} />
+                            </ListItemIcon>
+                            <ListItemText primary={m.name} />
+                        </ListItem>
+                    )}
+                </List>
+            </Paper>
         )
     }
 
     return (
-        <Grid container direction='row' style={{padding: '30px'}}>
-            <Grid item xs={3} className={classes.root}>
+        <Grid container direction='row'>
+            <Grid item xs={12} lg={3} className={classes.root} style={{padding: 30}}>
                 {countryState.countries.length === 0 ? <h2>Loading...</h2> : renderCountriesList()}
             </Grid>
 
-            <Grid item xs={9}>
-                {countryState.countries.length === 0 ? ''
-                    : <div>
+            <Grid container xs={12} lg={9}>
+                {countryState.countries.length === 0 ? <div></div>
+                    : countryState.selectedCountry === -1 ?
+                     <Grid item xs={12} style={{ textAlign: 'center'}}>
                         <h1>In Progress....</h1>
                         <h2>Stay tuned</h2>
-                    </div>}
+                    </Grid>
+                    :
+                    <Grid item xs={12} style={{ textAlign: 'center'}}>
+                        <h1>{countryState.selectedCountry !== -1 ? countryState.countries[countryState.selectedCountry].name : ''}</h1>
+                    </Grid>}
             </Grid>
         </Grid>
     )
