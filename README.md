@@ -1,4 +1,4 @@
-# Introduce
+# Introduction
 A place where you can travel online around the world ^_^
 
 ## Installing

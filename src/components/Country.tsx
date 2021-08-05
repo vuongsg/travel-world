@@ -42,6 +42,7 @@ export const Country = (): ReactElement => {
 
     const handleSelectCountry = (event: any, index: number) => {
         dispatch(selectCountry(index));
+        console.log(`You have selected ${countryState.countries[index].name}`);
     }
 
     /**
@@ -55,7 +56,7 @@ export const Country = (): ReactElement => {
                     {countryState.countries.map((m: CountryModel, index: number) =>
                         <ListItem button selected={countryState.selectedCountry === index} onClick={(event) => handleSelectCountry(event, index)}>
                             <ListItemIcon>
-                                <img src={m.flag} alt={m.name} style={{ maxWidth: '30px', maxHeight: '30px', objectFit: 'cover' }} />
+                                <img src={m.flag} alt={m.name} style={{ maxWidth: 30, maxHeight: 30, objectFit: 'cover' }} />
                             </ListItemIcon>
                             <ListItemText primary={m.name} />
                         </ListItem>
@@ -66,21 +67,33 @@ export const Country = (): ReactElement => {
     }
 
     return (
-        <Grid container direction='row'>
-            <Grid item xs={12} lg={3} className={classes.root} style={{padding: 30}}>
+        <Grid container direction='row' wrap='nowrap' style={{padding: 30}}>
+            <Grid item xs={12} lg={3} className={classes.root} style={{height: '100%'}}>
                 {countryState.countries.length === 0 ? <h2>Loading...</h2> : renderCountriesList()}
             </Grid>
 
-            <Grid container xs={12} lg={9}>
+            <Grid item xs={12} lg={9}>
                 {countryState.countries.length === 0 ? <div></div>
                     : countryState.selectedCountry === -1 ?
-                     <Grid item xs={12} style={{ textAlign: 'center'}}>
-                        <h1>In Progress....</h1>
-                        <h2>Stay tuned</h2>
+                     <Grid container>
+                        <Grid item xs={12} style={{textAlign: 'center'}}>
+                            <h1>Pick any country that you want to visit *_*</h1>
+                            <h2>We are ready</h2>
+                        </Grid>
                     </Grid>
                     :
-                    <Grid item xs={12} style={{ textAlign: 'center'}}>
-                        <h1>{countryState.selectedCountry !== -1 ? countryState.countries[countryState.selectedCountry].name : ''}</h1>
+                    <Grid container>
+                        <Grid item xs={12} style={{textAlign: 'center', marginBottom: 20, marginLeft: 20}}>
+                            <h1>{countryState.selectedCountry !== -1 ? countryState.countries[countryState.selectedCountry].name : ''}</h1>
+                        </Grid>
+                        <Grid container>
+                            <Grid item xs={12} lg={3} style={{textAlign: 'center',  marginBottom: 20, marginLeft: 20}}>
+                                <img src={countryState.selectedCountry !== -1 ? countryState.countries[countryState.selectedCountry].flag : ''} alt=''
+                                    style={{ width: '100%', maxWidth: 250, maxHeight: 250, objectFit: 'cover'}} />
+                            </Grid>
+                            <Grid item xs={12} lg={9}>
+                            </Grid>
+                        </Grid>
                     </Grid>}
             </Grid>
         </Grid>
