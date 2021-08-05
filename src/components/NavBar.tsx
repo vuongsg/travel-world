@@ -122,7 +122,7 @@ export const NavBar = ():ReactElement => {
       <MenuItem>
         <IconButton aria-label='Home'>
           <Link to='/'>
-            <HomeIcon />
+            <HomeIcon style={{color: '#000'}} />
             <h5>Home</h5>
           </Link>
         </IconButton>
@@ -131,7 +131,7 @@ export const NavBar = ():ReactElement => {
       <MenuItem>
         <IconButton aria-label='About'>
           <Link to='/about'>
-            <InfoIcon />
+            <InfoIcon style={{color: '#000'}} />
             <h5>About</h5>
           </Link>
         </IconButton>
@@ -168,14 +168,14 @@ export const NavBar = ():ReactElement => {
             <IconButton aria-label='Home'>
               <Link to='/'>
                 <Tooltip title='Home' placement='bottom' classes={{tooltip: classes.tooltip}}>
-                  <HomeIcon />
+                  <HomeIcon style={{color: '#fff'}} />
                 </Tooltip>
               </Link>
             </IconButton>
             <IconButton aria-label='About'>
               <Link to='/about'>
                 <Tooltip title='About' placement='bottom' classes={{tooltip: classes.tooltip}}>
-                  <InfoIcon />
+                  <InfoIcon style={{color: '#fff'}} />
                 </Tooltip>
               </Link>
             </IconButton>

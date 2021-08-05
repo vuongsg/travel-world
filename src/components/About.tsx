@@ -6,8 +6,8 @@ export const About = (): ReactElement => {
     return (
         <div id='main'>
             <Typography>
-                <h2>A place to introduce the countries around the world</h2>
-                <h2>I'm Vuong Nguyen, the creator</h2>
+                <h3>A place to introduce the countries around the world</h3>
+                <p>Hi everyone. I'm Vuong Nguyen, the creator</p>
             </Typography>
         </div>
     )

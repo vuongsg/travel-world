@@ -26,7 +26,6 @@ export const Country = (): ReactElement => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        document.title = 'Travel online around the world';
         getCountriesList();
     }, []);
 
@@ -42,7 +41,6 @@ export const Country = (): ReactElement => {
 
     const handleSelectCountry = (event: any, index: number) => {
         dispatch(selectCountry(index));
-        console.log(`You have selected ${countryState.countries[index].name}`);
     }
 
     /**
@@ -84,14 +82,25 @@ export const Country = (): ReactElement => {
                     :
                     <Grid container>
                         <Grid item xs={12} style={{textAlign: 'center', marginBottom: 20, marginLeft: 20}}>
-                            <h1>{countryState.selectedCountry !== -1 ? countryState.countries[countryState.selectedCountry].name : ''}</h1>
+                            <h1>{countryState.countries[countryState.selectedCountry].name}</h1>
                         </Grid>
-                        <Grid container>
+                        <Grid container direction='row' wrap='nowrap'>
                             <Grid item xs={12} lg={3} style={{textAlign: 'center',  marginBottom: 20, marginLeft: 20}}>
-                                <img src={countryState.selectedCountry !== -1 ? countryState.countries[countryState.selectedCountry].flag : ''} alt=''
+                                <img src={countryState.countries[countryState.selectedCountry].flag} alt=''
                                     style={{ width: '100%', maxWidth: 250, maxHeight: 250, objectFit: 'cover'}} />
                             </Grid>
-                            <Grid item xs={12} lg={9}>
+                            <Grid item xs={12} lg={9} style={{lineHeight: 2, marginLeft: 20}}>
+                                <p>Native name: {countryState.countries[countryState.selectedCountry].nativeName}</p>
+                                <p>Continent: {countryState.countries[countryState.selectedCountry].region}</p>
+                                <p>Capital: {countryState.countries[countryState.selectedCountry].capital}</p>
+                                <p>Time: {countryState.countries[countryState.selectedCountry].timezones.join(', ')}</p>
+                                <p>Code: {countryState.countries[countryState.selectedCountry].callingCodes.join(', ')}</p>
+                                <p>Currencies: {countryState.countries[countryState.selectedCountry].currencies.map(m => m.name).join(', ')}</p>
+                                <p>Neighbors: {countryState.countries[countryState.selectedCountry].borders
+                                                                                                 .map(m => countryState.countries
+                                                                                                                .find(co => co.alpha3Code === m)?.name)
+                                                                                                 .join(', ')}
+                                </p>
                             </Grid>
                         </Grid>
                     </Grid>}
