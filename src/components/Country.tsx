@@ -11,7 +11,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import './Country.scss';
 import { Grid, Paper, SnackbarContent } from '@material-ui/core';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
-import { AutorenewTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,7 +73,7 @@ export const Country = (): ReactElement => {
 
     return (
         <Grid container direction='row' wrap='nowrap' style={{padding: 30}}>
-            <Grid item xs={12} lg={3} className={classes.root} style={{height: '100%', marginRight: 30}}>
+            <Grid item xs={12} lg={3} id='div-countries-list' className={classes.root} style={{height: '100%', marginRight: 30}}>
                 {countryState.countries.length === 0 ? <h2>Loading...</h2> : renderCountriesList()}
             </Grid>
 
