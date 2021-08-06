@@ -9,8 +9,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import './Country.scss';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper, SnackbarContent } from '@material-ui/core';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
+import { AutorenewTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,6 +19,13 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper
     },
+    snackBarDiv: {
+        maxWidth: 800,
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
+        margin: '0 auto'
+      }
 }));
 
 export const Country = (): ReactElement => {
@@ -66,7 +74,7 @@ export const Country = (): ReactElement => {
 
     return (
         <Grid container direction='row' wrap='nowrap' style={{padding: 30}}>
-            <Grid item xs={12} lg={3} className={classes.root} style={{height: '100%'}}>
+            <Grid item xs={12} lg={3} className={classes.root} style={{height: '100%', marginRight: 30}}>
                 {countryState.countries.length === 0 ? <h2>Loading...</h2> : renderCountriesList()}
             </Grid>
 
@@ -74,9 +82,15 @@ export const Country = (): ReactElement => {
                 {countryState.countries.length === 0 ? <div></div>
                     : countryState.selectedCountry === -1 ?
                      <Grid container>
-                        <Grid item xs={12} style={{textAlign: 'center'}}>
-                            <h1>Pick any country that you want to visit *_*</h1>
-                            <h2>We are ready</h2>
+                        <Grid item xs={12} className={classes.snackBarDiv}>
+                            <SnackbarContent
+                                message={
+                                    <div style={{lineHeight: 2}}>
+                                        <h1>Pick any country that you want to visit &nbsp; *_*</h1>
+                                        <h3>We are ready</h3>
+                                    </div>
+                                }
+                            />
                         </Grid>
                     </Grid>
                     :
@@ -98,9 +112,11 @@ export const Country = (): ReactElement => {
                                                     : ''}</p>
                                 <p>- Region: {countryState.countries[countryState.selectedCountry].subregion}</p>
                                 <p>- Capital: {countryState.countries[countryState.selectedCountry].capital}</p>
-                                <p>- Timezones:
+                                <p>- Time zones:
                                     <ul>
-                                        {countryState.countries[countryState.selectedCountry].timezones.map(m => <li style={{marginLeft: 50}}>{m}</li>)}
+                                        {countryState.countries[countryState.selectedCountry].timezones.map(m => <li style={{marginLeft: 50}}>
+                                                                                                                    {m.endsWith(':00') 
+                                                                                                                    ? m.substr(0, m.length - 3) : m}</li>)}
                                     </ul>
                                 </p>
                                 <p>- Code:
