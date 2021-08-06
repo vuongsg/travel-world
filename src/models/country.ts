@@ -4,6 +4,13 @@ interface Currency {
     symbol: string
 }
 
+interface Language {
+    iso639_1: string;
+    iso639_2: string;
+    name: string;
+    nativeName: string
+}
+
 export class CountryModel {
     name: string;
     capital: string;
@@ -19,10 +26,11 @@ export class CountryModel {
     alpha3Code: string;
     callingCodes: string[];
     currencies: Currency[];
+    languages: Language[];
 
     constructor(name: string, capital: string, region: string, subregion: string, population: string, timezones: string[], 
                 borders: string[], nativeName: string, numericCode: string, flag: string, alpha2Code: string, alpha3Code: string,
-                callingCodes: string[], currencies: Currency[], ) {
+                callingCodes: string[], currencies: Currency[], languages: Language[]) {
         this.name = name;
         this.capital = capital;
         this.region = region;
@@ -37,5 +45,6 @@ export class CountryModel {
         this.alpha3Code = alpha3Code;
         this.callingCodes = callingCodes;
         this.currencies = currencies;
+        this.languages = languages;
     }
 }

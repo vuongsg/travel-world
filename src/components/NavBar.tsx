@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
-    minWidth: '600px'
+    minWidth: 600
   },
   sectionMobile: {
     display: 'flex',
@@ -80,6 +80,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  iconButtonDesktop: {
+    marginRight: 30
   }
 }));
 
@@ -165,14 +168,14 @@ export const NavBar = ():ReactElement => {
           <div className={classes.grow} />
 
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label='Home'>
+            <IconButton aria-label='Home' className={classes.iconButtonDesktop}>
               <Link to='/'>
                 <Tooltip title='Home' placement='bottom' classes={{tooltip: classes.tooltip}}>
                   <HomeIcon style={{color: '#fff'}} />
                 </Tooltip>
               </Link>
             </IconButton>
-            <IconButton aria-label='About'>
+            <IconButton aria-label='About' className={classes.iconButtonDesktop}>
               <Link to='/about'>
                 <Tooltip title='About' placement='bottom' classes={{tooltip: classes.tooltip}}>
                   <InfoIcon style={{color: '#fff'}} />
