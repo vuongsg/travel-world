@@ -91,27 +91,40 @@ export const Country = (): ReactElement => {
                             </Grid>
                             <Grid item xs={12} lg={9} style={{lineHeight: 2, marginLeft: 20}}>
                                 <p>- Native name: {countryState.countries[countryState.selectedCountry].nativeName}</p>
-                                <p>- Continent: {countryState.countries[countryState.selectedCountry].region}</p>
+                                <p>- Official name: {countryState.countries[countryState.selectedCountry].altSpellings.length > 1
+                                                    ? countryState.countries[countryState.selectedCountry].altSpellings[1]
+                                                    : countryState.countries[countryState.selectedCountry].altSpellings.length > 0
+                                                    ? countryState.countries[countryState.selectedCountry].altSpellings[0]
+                                                    : ''}</p>
+                                <p>- Region: {countryState.countries[countryState.selectedCountry].subregion}</p>
                                 <p>- Capital: {countryState.countries[countryState.selectedCountry].capital}</p>
                                 <p>- Timezones:
                                     <ul>
                                         {countryState.countries[countryState.selectedCountry].timezones.map(m => <li style={{marginLeft: 50}}>{m}</li>)}
                                     </ul>
                                 </p>
-                                <p>- Code: {countryState.countries[countryState.selectedCountry].callingCodes.join(', ')}</p>
-                                <p>-Language:
+                                <p>- Code:
                                     <ul>
-                                        {countryState.countries[countryState.selectedCountry].languages.map(m => m.name)
-                                                                                                       .map(m => <li style={{marginLeft: 50}}>{m}</li>)}
+                                        {countryState.countries[countryState.selectedCountry].callingCodes.map(m => <li style={{marginLeft: 50}}>{m}</li>)}
                                     </ul>
                                 </p>
-                                <p>- Currencies: {countryState.countries[countryState.selectedCountry].currencies.map(m => m.name).join(', ')}</p>
+                                <p>- Language:
+                                    <ul>
+                                        {countryState.countries[countryState.selectedCountry].languages.map(m => <li style={{marginLeft: 50}}>{m.name}</li>)}
+                                                                                                       
+                                    </ul>
+                                </p>
+                                <p>- Currencies:
+                                    <ul>
+                                        {countryState.countries[countryState.selectedCountry].currencies.map(m => <li style={{marginLeft: 50}}>{m.name}</li>)}
+                                    </ul>
+                                </p>
                                 <p>- Borders:
                                     <ul>
-                                    {countryState.countries[countryState.selectedCountry].borders
-                                                                                                 .map(m => countryState.countries
-                                                                                                                .find(co => co.alpha3Code === m)?.name)
-                                                                                                 .map(m => <li style={{marginLeft: 50}}>{m}</li>)}
+                                        {countryState.countries[countryState.selectedCountry].borders
+                                                                                             .map(m => countryState.countries
+                                                                                                                .find(co => co.alpha3Code === m))
+                                                                                             .map(m => <li style={{marginLeft: 50}}>{m?.name}</li>)}
                                     </ul>
                                 </p>
                             </Grid>

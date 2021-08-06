@@ -27,10 +27,11 @@ export class CountryModel {
     callingCodes: string[];
     currencies: Currency[];
     languages: Language[];
+    altSpellings: string[]
 
     constructor(name: string, capital: string, region: string, subregion: string, population: string, timezones: string[], 
                 borders: string[], nativeName: string, numericCode: string, flag: string, alpha2Code: string, alpha3Code: string,
-                callingCodes: string[], currencies: Currency[], languages: Language[]) {
+                callingCodes: string[], currencies: Currency[], languages: Language[], altSpellings: string[]) {
         this.name = name;
         this.capital = capital;
         this.region = region;
@@ -46,5 +47,6 @@ export class CountryModel {
         this.callingCodes = callingCodes;
         this.currencies = currencies;
         this.languages = languages;
+        this.altSpellings = altSpellings;
     }
 }
