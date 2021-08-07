@@ -4,12 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CountryModel } from '../models/country';
 import { RootType } from '../store';
 import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import { Container, Grid, Paper, SnackbarContent, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import './Country.scss';
-import { Grid, Paper, SnackbarContent } from '@material-ui/core';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper
     },
     snackBarDiv: {
-        maxWidth: 800,
+        maxWidth: 600,
         '& > * + *': {
           marginTop: theme.spacing(2),
         },
@@ -56,7 +52,7 @@ export const Country = (): ReactElement => {
      */
     const renderCountriesList = () => {
         return (
-            <Paper id='paper-countries-list' style={{ maxHeight: 700, overflow: 'auto' }}>
+            <Paper id='paper-countries-list' style={{ maxHeight: 700, marginBottom: 30, overflow: 'auto' }}>
                 <List component="nav" aria-label="countries list">
                     {countryState.countries.map((m: CountryModel, index: number) =>
                         <ListItem button selected={countryState.selectedCountry === index} onClick={(event) => handleSelectCountry(event, index)}>
@@ -72,80 +68,90 @@ export const Country = (): ReactElement => {
     }
 
     return (
-        <Grid container direction='row' wrap='nowrap' style={{padding: 30}}>
-            <Grid item xs={12} lg={3} id='div-countries-list' className={classes.root} style={{height: '100%', marginRight: 30}}>
-                {countryState.countries.length === 0 ? <h2>Loading...</h2> : renderCountriesList()}
-            </Grid>
+        <Container>
+            <Grid container direction='row' style={{ padding: 30 }}>
+                <Grid item sm={12} lg={3} className={classes.root} >
+                    {countryState.countries.length === 0 ? <h2>Loading...</h2> : renderCountriesList()}
+                </Grid>
 
-            <Grid item xs={12} lg={9}>
-                {countryState.countries.length === 0 ? <div></div>
-                    : countryState.selectedCountry === -1 ?
-                     <Grid container>
-                        <Grid item xs={12} className={classes.snackBarDiv}>
-                            <SnackbarContent
-                                message={
-                                    <div style={{lineHeight: 2}}>
-                                        <h1>Pick any country that you want to visit &nbsp; *_*</h1>
-                                        <h3>We are ready</h3>
-                                    </div>
-                                }
-                            />
-                        </Grid>
-                    </Grid>
-                    :
-                    <Grid container>
-                        <Grid item xs={12} style={{textAlign: 'center', marginBottom: 20, marginLeft: 20}}>
-                            <h1>{countryState.countries[countryState.selectedCountry].name}</h1>
-                        </Grid>
-                        <Grid container direction='row' wrap='nowrap'>
-                            <Grid item xs={12} lg={3} style={{textAlign: 'center',  marginBottom: 20, marginLeft: 20}}>
-                                <img src={countryState.countries[countryState.selectedCountry].flag} alt=''
-                                    style={{ width: '100%', maxWidth: 250, maxHeight: 250, objectFit: 'cover'}} />
+                <Grid item sm={12} lg={9}>
+                    {countryState.countries.length === 0 ? <div></div>
+                        : countryState.selectedCountry === -1 ?
+                            <Grid container direction='row'>
+                                <Grid item sm={12} className={classes.snackBarDiv}>
+                                    <SnackbarContent
+                                        message={
+                                            <Grid item sm={12} style={{ textAlign: 'center', margin: '0 auto', lineHeight: 2 }}>
+                                                <h1>Pick any country that you want to visit &nbsp; *_*</h1>
+                                                <h3>We are ready</h3>
+                                            </Grid>
+                                        }
+                                    />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} lg={9} style={{lineHeight: 2, marginLeft: 20}}>
-                                <p>- Native name: {countryState.countries[countryState.selectedCountry].nativeName}</p>
-                                <p>- Official name: {countryState.countries[countryState.selectedCountry].altSpellings.length > 1
-                                                    ? countryState.countries[countryState.selectedCountry].altSpellings[1]
-                                                    : countryState.countries[countryState.selectedCountry].altSpellings.length > 0
-                                                    ? countryState.countries[countryState.selectedCountry].altSpellings[0]
-                                                    : ''}</p>
-                                <p>- Region: {countryState.countries[countryState.selectedCountry].subregion}</p>
-                                <p>- Capital: {countryState.countries[countryState.selectedCountry].capital}</p>
-                                <p>- Time zones:
-                                    <ul>
-                                        {countryState.countries[countryState.selectedCountry].timezones.map(m => <li style={{marginLeft: 50}}>
-                                                                                                                    {m.endsWith(':00') 
-                                                                                                                    ? m.substr(0, m.length - 3) : m}</li>)}
-                                    </ul>
-                                </p>
-                                <p>- Code:
-                                    <ul>
-                                        {countryState.countries[countryState.selectedCountry].callingCodes.map(m => <li style={{marginLeft: 50}}>{m}</li>)}
-                                    </ul>
-                                </p>
-                                <p>- Language:
-                                    <ul>
-                                        {countryState.countries[countryState.selectedCountry].languages.map(m => <li style={{marginLeft: 50}}>{m.name}</li>)}
-                                                                                                       
-                                    </ul>
-                                </p>
-                                <p>- Currencies:
-                                    <ul>
-                                        {countryState.countries[countryState.selectedCountry].currencies.map(m => <li style={{marginLeft: 50}}>{m.name}</li>)}
-                                    </ul>
-                                </p>
-                                <p>- Borders:
-                                    <ul>
-                                        {countryState.countries[countryState.selectedCountry].borders
-                                                                                             .map(m => countryState.countries
-                                                                                                                .find(co => co.alpha3Code === m))
-                                                                                             .map(m => <li style={{marginLeft: 50}}>{m?.name}</li>)}
-                                    </ul>
-                                </p>
-                            </Grid>
-                        </Grid>
-                    </Grid>}
+                            :
+                            <Grid container direction="row">
+                                <Grid item sm={12} style={{ textAlign: 'center', margin: '0 auto', marginBottom: 30 }}>
+                                    <h1>{countryState.countries[countryState.selectedCountry].name}</h1>
+                                </Grid>
+                                <Grid container direction='row'>
+                                    <Grid item sm={12} lg={3} style={{ textAlign: 'center', margin:'0 auto', marginBottom: 30, paddingLeft: 30 }}>
+                                        <img src={countryState.countries[countryState.selectedCountry].flag} alt=''
+                                            style={{ width: '100%', maxWidth: 250, maxHeight: 250, objectFit: 'cover' }} />
+                                    </Grid>
+                                    <Grid item sm={12} lg={9} id='grid-info' style={{ lineHeight: 2, margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
+                                        <p>- Native name: {countryState.countries[countryState.selectedCountry].nativeName}</p>
+                                        <p>- Official name: {countryState.countries[countryState.selectedCountry].altSpellings.length > 1
+                                            ? countryState.countries[countryState.selectedCountry].altSpellings[1]
+                                            : countryState.countries[countryState.selectedCountry].altSpellings.length > 0
+                                                ? countryState.countries[countryState.selectedCountry].altSpellings[0]
+                                                : ''}</p>
+                                        <p>- Region: {countryState.countries[countryState.selectedCountry].subregion}</p>
+                                        <p>- Capital: {countryState.countries[countryState.selectedCountry].capital}</p>
+                                        <p>- Time zones:
+                                            <ul>
+                                                {countryState.countries[countryState.selectedCountry].timezones.map(m => <li style={{ marginLeft: 50 }}>
+                                                    {m.endsWith(':00')
+                                                        ? m.substr(0, m.length - 3) : m}</li>)}
+                                            </ul>
+                                        </p>
+                                        <p>- Code:
+                                            <ul>
+                                                {countryState.countries[countryState.selectedCountry].callingCodes.map(m => <li style={{ marginLeft: 50 }}>
+                                                                                                                                {m}
+                                                                                                                            </li>)}
+                                            </ul>
+                                        </p>
+                                        <p>- Language:
+                                            <ul>
+                                                {countryState.countries[countryState.selectedCountry].languages.map(m => <li style={{ marginLeft: 50 }}>
+                                                                                                                            {m.name}
+                                                                                                                        </li>)}
+
+                                            </ul>
+                                        </p>
+                                        <p>- Currencies:
+                                            <ul>
+                                                {countryState.countries[countryState.selectedCountry].currencies.map(m => <li style={{ marginLeft: 50 }}>
+                                                                                                                            {m.name}
+                                                                                                                          </li>)}
+                                            </ul>
+                                        </p>
+                                        <p>- Borders:
+                                            <ul>
+                                                {countryState.countries[countryState.selectedCountry].borders
+                                                                                                    .map(m => countryState.countries
+                                                                                                        .find(co => co.alpha3Code === m))
+                                                                                                    .map(m => <li style={{ marginLeft: 50 }}>
+                                                                                                                {m?.name}
+                                                                                                              </li>)}
+                                            </ul>
+                                        </p>
+                                    </Grid>
+                                </Grid>
+                            </Grid>}
+                </Grid>
             </Grid>
-        </Grid>
+        </Container>
     )
 }
