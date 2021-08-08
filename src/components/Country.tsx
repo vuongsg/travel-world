@@ -5,8 +5,8 @@ import { CountryModel } from '../models/country';
 import { RootType } from '../store';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Grid, Paper, SnackbarContent, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import './Country.scss';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
+import './Country.scss';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,9 +36,18 @@ export const Country = (): ReactElement => {
      * Get countries list, called at first
      */
     const getCountriesList = async () => {
-        const response = await fetch('https://restcountries.eu/rest/v2/all');
-        const data = await response.json();
-        const countries: CountryModel[] = Array.from(data);
+        let countries: CountryModel[] = [];
+
+        try {
+            const data = require('../countries.json');
+            countries = Array.from(data);
+        } catch (err) {
+            console.log(err);
+            const response = await fetch('https://restcountries.eu/rest/v2/all');
+            const data = await response.json();
+            countries = Array.from(data);
+        }
+        
         dispatch(getCountries(countries)); 
     }
 
@@ -137,7 +146,7 @@ export const Country = (): ReactElement => {
                                                                                                                           </li>)}
                                             </ul>
                                         </p>
-                                        <p>- Borders:
+                                        <p>- Frontiers:
                                             <ul>
                                                 {countryState.countries[countryState.selectedCountry].borders
                                                                                                     .map(m => countryState.countries

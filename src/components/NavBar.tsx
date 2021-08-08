@@ -1,18 +1,16 @@
 import React, { ReactElement } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { alpha, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import { AppBar, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
+import { CountryState, selectCountry } from '../slices/country-slices'
+import { RootType } from '../store';
 import './NavBar.scss'
-import { InputBase, Tooltip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -72,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchIcon: {
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 0.4),
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -87,6 +85,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const NavBar = ():ReactElement => {
   const classes = useStyles();
+  const countryState = useSelector<RootType>(state => state.Country) as CountryState;
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -141,6 +142,12 @@ export const NavBar = ():ReactElement => {
     </Menu>
   );
 
+  const changeSearchText = (event: object, value: any, reason: any): void => {
+    if (reason !== 'clear') {
+      dispatch(selectCountry(countryState.countries.findIndex(m => m.name === value)));
+    }
+  }
+
   return (
     <div id='main-nav-bar' className={classes.grow}>
       <AppBar position="static">
@@ -152,16 +159,20 @@ export const NavBar = ():ReactElement => {
             Travel online around the world
           </Typography>
 
-          <div className={classes.search}>
+          <div className={classes.search} style={{display: 'flex'}}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+              <SearchIcon style={{color: '#000'}} />
             </div>
-            <InputBase placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }} />
+            <Autocomplete id="search-box"
+              options={countryState.countries.map(m => m.name)}
+              renderInput={(params) => (
+                <div ref={params.InputProps.ref}>
+                  <input type='text' placeholder='Search...' style={{ width: 300, paddingLeft: 28, paddingTop: 8, paddingBottom: 8 }} 
+                        {...params.inputProps} />
+                </div>
+              )}
+              onChange={changeSearchText}
+            />
           </div>
 
           <div className={classes.grow} />

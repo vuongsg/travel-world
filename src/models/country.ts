@@ -16,7 +16,7 @@ export class CountryModel {
     capital: string;
     region: string;
     subregion: string;
-    population: string;
+    population: number;
     timezones: string[];
     borders: string[];
     nativeName: string;
@@ -29,7 +29,7 @@ export class CountryModel {
     languages: Language[];
     altSpellings: string[]
 
-    constructor(name: string, capital: string, region: string, subregion: string, population: string, timezones: string[], 
+    constructor(name: string, capital: string, region: string, subregion: string, population: number, timezones: string[], 
                 borders: string[], nativeName: string, numericCode: string, flag: string, alpha2Code: string, alpha3Code: string,
                 callingCodes: string[], currencies: Currency[], languages: Language[], altSpellings: string[]) {
         this.name = name;
