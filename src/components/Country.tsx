@@ -77,7 +77,7 @@ export const Country = (): ReactElement => {
     }
 
     return (
-        <Container>
+        <Container className='main-container'>
             <Grid container direction='row' style={{ padding: 30 }}>
                 <Grid item sm={12} lg={3} className={classes.root} >
                     {countryState.countries.length === 0 ? <h2>Loading...</h2> : renderCountriesList()}
