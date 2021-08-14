@@ -55,6 +55,15 @@ export const Country = (): ReactElement => {
         dispatch(selectCountry(index));
     }
 
+    const handleSelectCountryByName = (event: any, countryName: string | undefined) => {
+        if (countryName && countryName !== '') {
+            const index = countryState.countries.findIndex(m => m.name === countryName);
+            if (index !== -1) {
+                dispatch(selectCountry(index));
+            }
+        }
+    }
+
     /**
      * Render countries list to UI
      * @returns 
@@ -152,7 +161,10 @@ export const Country = (): ReactElement => {
                                                                                                     .map(m => countryState.countries
                                                                                                         .find(co => co.alpha3Code === m))
                                                                                                     .map(m => <li style={{ marginLeft: 50 }}>
-                                                                                                                {m?.name}
+                                                                                                                <button className='btn-country-name' 
+                                                                                                                onClick={event => handleSelectCountryByName(event, m?.name)}>
+                                                                                                                    {m?.name}
+                                                                                                                </button>
                                                                                                               </li>)}
                                             </ul>
                                         </p>

@@ -23,7 +23,7 @@ export const About = (): ReactElement => {
                     <SnackbarContent
                         message={
                             <div style={{ lineHeight: 2, paddingTop: 60, paddingBottom: 60 }}>
-                                <p>Hi everyone, I'm Vuong Nguyen - creator of this page &nbsp; ^_^</p>
+                                <p>Hi everyone, I'm <span className='impo'>Vuong Nguyen</span> - creator of this page &nbsp; ^_^</p>
                                 <p>Here is the place where you can travel online around the world. Enjoy yourselves !</p>
                                 <p>I also have another website for playing game N Queens. You can find</p>
                                 <p>
