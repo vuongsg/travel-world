@@ -126,7 +126,7 @@ export const Country = (): ReactElement => {
                                                 : ''}</p>
                                         <p>- Region: {countryState.countries[countryState.selectedCountry].subregion}</p>
                                         <p>- Capital: {countryState.countries[countryState.selectedCountry].capital}</p>
-                                        <p>- Time zones:
+                                        <p>- {countryState.countries[countryState.selectedCountry].timezones.length > 1 ? 'Time zones' : 'Time zone'}:
                                             <ul>
                                                 {countryState.countries[countryState.selectedCountry].timezones.map(m => <li style={{ marginLeft: 50 }}>
                                                     {m.endsWith(':00')
@@ -136,11 +136,11 @@ export const Country = (): ReactElement => {
                                         <p>- Code:
                                             <ul>
                                                 {countryState.countries[countryState.selectedCountry].callingCodes.map(m => <li style={{ marginLeft: 50 }}>
-                                                                                                                                {m}
+                                                                                                                                +{m}
                                                                                                                             </li>)}
                                             </ul>
                                         </p>
-                                        <p>- Language:
+                                        <p>- {countryState.countries[countryState.selectedCountry].languages.length > 1 ? 'Languages' : 'Language'}:
                                             <ul>
                                                 {countryState.countries[countryState.selectedCountry].languages.map(m => <li style={{ marginLeft: 50 }}>
                                                                                                                             {m.name}
@@ -148,14 +148,14 @@ export const Country = (): ReactElement => {
 
                                             </ul>
                                         </p>
-                                        <p>- Currencies:
+                                        <p>- {countryState.countries[countryState.selectedCountry].currencies.length > 1 ? 'Currencies' : 'Currency'}:
                                             <ul>
                                                 {countryState.countries[countryState.selectedCountry].currencies.map(m => <li style={{ marginLeft: 50 }}>
                                                                                                                             {m.name}
                                                                                                                           </li>)}
                                             </ul>
                                         </p>
-                                        <p>- Frontiers:
+                                        <p>- {countryState.countries[countryState.selectedCountry].borders.length > 1 ? 'Borders' : 'Border'}:
                                             <ul>
                                                 {countryState.countries[countryState.selectedCountry].borders
                                                                                                     .map(m => countryState.countries
