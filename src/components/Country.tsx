@@ -133,7 +133,7 @@ export const Country = (): ReactElement => {
                                                         ? m.substr(0, m.length - 3) : m}</li>)}
                                             </ul>
                                         </p>
-                                        <p>- Code:
+                                        <p>- {countryState.countries[countryState.selectedCountry].callingCodes.length > 1 ? 'Codes' : 'Code'}:
                                             <ul>
                                                 {countryState.countries[countryState.selectedCountry].callingCodes.map(m => <li style={{ marginLeft: 50 }}>
                                                                                                                                 +{m}
