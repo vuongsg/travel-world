@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CountryModel } from '../models/country';
 import { RootType } from '../store';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Grid, Paper, SnackbarContent, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
 import './Country.scss';
 
@@ -23,7 +23,11 @@ const useStyles = makeStyles((theme) => ({
       }
 }));
 
+let numberCountriesDisplaying = 0;
+
 export const Country = (): ReactElement => {
+    const [hasData, setData] = useState(true);
+    const [countriesDisplay, setCountriesDisplay] = useState<CountryModel[]>([]);   //display in list countries
     const classes = useStyles();
     let countryState = useSelector<RootType>(state => state.Country) as CountryState;
     const dispatch = useDispatch();
@@ -48,7 +52,32 @@ export const Country = (): ReactElement => {
             countries = Array.from(data);
         }
         
-        dispatch(getCountries(countries)); 
+        numberCountriesDisplaying = countries.length < 20 ? countries.length : 20;
+        const temp: CountryModel[] = [];
+
+        for (let i = 0; i < numberCountriesDisplaying; i++) {
+            temp.push(countries[i]);
+        }
+
+        setCountriesDisplay(temp);
+        dispatch(getCountries(countries));
+    }
+
+    const fetchCountriesMore = () => {
+        if (countryState.countries.length <= numberCountriesDisplaying) {
+            setData(false);
+            return;
+        }
+
+        numberCountriesDisplaying = countryState.countries.length < numberCountriesDisplaying + 20 ? countryState.countries.length
+                                                                                                    : numberCountriesDisplaying + 20;
+
+        const temp: CountryModel[] = [];
+        for (let i = 0; i < numberCountriesDisplaying; i++) {
+            temp.push(countryState.countries[i]);
+        }
+
+        setCountriesDisplay(temp);
     }
 
     const handleSelectCountry = (event: any, index: number) => {
@@ -72,14 +101,22 @@ export const Country = (): ReactElement => {
         return (
             <Paper id='paper-countries-list' style={{ maxHeight: 700, marginBottom: 30, overflow: 'auto' }}>
                 <List component="nav" aria-label="countries list">
-                    {countryState.countries.map((m: CountryModel, index: number) =>
-                        <ListItem button selected={countryState.selectedCountry === index} onClick={(event) => handleSelectCountry(event, index)}>
-                            <ListItemIcon>
-                                <img src={m.flag} alt={m.name} style={{ maxWidth: 30, maxHeight: 30, objectFit: 'cover' }} />
-                            </ListItemIcon>
-                            <ListItemText primary={m.name} />
-                        </ListItem>
-                    )}
+                    <InfiniteScroll dataLength={countriesDisplay.length}
+                        next={fetchCountriesMore}
+                        hasMore={hasData}
+                        scrollThreshold={0.8}
+                        loader={<h4>Loading...</h4>}
+                        scrollableTarget="paper-countries-list">
+                        {countriesDisplay.map((m: CountryModel, index: number) =>
+                            <ListItem key={index} button selected={countryState.selectedCountry === index} 
+                                      onClick={(event) => handleSelectCountry(event, index)}>
+                                <ListItemIcon>
+                                    <img src={m.flag} alt={m.name} style={{ maxWidth: 30, maxHeight: 30, objectFit: 'cover' }} />
+                                </ListItemIcon>
+                                <ListItemText primary={m.name} />
+                            </ListItem>
+                        )}
+                    </InfiniteScroll>
                 </List>
             </Paper>
         )
