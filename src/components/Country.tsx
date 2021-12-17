@@ -165,31 +165,25 @@ export const Country = (): ReactElement => {
                                         <p>- Capital: {countryState.countries[countryState.selectedCountry].capital}</p>
                                         <p>- {countryState.countries[countryState.selectedCountry].timezones.length > 1 ? 'Time zones' : 'Time zone'}:
                                             <ul>
-                                                {countryState.countries[countryState.selectedCountry].timezones.map(m => <li style={{ marginLeft: 50 }}>
+                                                {countryState.countries[countryState.selectedCountry].timezones.map(m => <li>
                                                     {m.endsWith(':00')
                                                         ? m.substr(0, m.length - 3) : m}</li>)}
                                             </ul>
                                         </p>
                                         <p>- {countryState.countries[countryState.selectedCountry].callingCodes.length > 1 ? 'Codes' : 'Code'}:
                                             <ul>
-                                                {countryState.countries[countryState.selectedCountry].callingCodes.map(m => <li style={{ marginLeft: 50 }}>
-                                                                                                                                +{m}
-                                                                                                                            </li>)}
+                                                {countryState.countries[countryState.selectedCountry].callingCodes.map(m => <li>+{m}</li>)}
                                             </ul>
                                         </p>
                                         <p>- {countryState.countries[countryState.selectedCountry].languages.length > 1 ? 'Languages' : 'Language'}:
                                             <ul>
-                                                {countryState.countries[countryState.selectedCountry].languages.map(m => <li style={{ marginLeft: 50 }}>
-                                                                                                                            {m.name}
-                                                                                                                        </li>)}
+                                                {countryState.countries[countryState.selectedCountry].languages.map(m => <li>{m.name}</li>)}
 
                                             </ul>
                                         </p>
                                         <p>- {countryState.countries[countryState.selectedCountry].currencies.length > 1 ? 'Currencies' : 'Currency'}:
                                             <ul>
-                                                {countryState.countries[countryState.selectedCountry].currencies.map(m => <li style={{ marginLeft: 50 }}>
-                                                                                                                            {m.name}
-                                                                                                                          </li>)}
+                                                {countryState.countries[countryState.selectedCountry].currencies.map(m => <li>{m.name}</li>)}
                                             </ul>
                                         </p>
                                         <p>- {countryState.countries[countryState.selectedCountry].borders.length > 1 ? 'Borders' : 'Border'}:
@@ -197,7 +191,7 @@ export const Country = (): ReactElement => {
                                                 {countryState.countries[countryState.selectedCountry].borders
                                                                                                     .map(m => countryState.countries
                                                                                                         .find(co => co.alpha3Code === m))
-                                                                                                    .map(m => <li style={{ marginLeft: 50 }}>
+                                                                                                    .map(m => <li>
                                                                                                                 <button className='btn-country-name' 
                                                                                                                 onClick={event => handleSelectCountryByName(event, m?.name)}>
                                                                                                                     {m?.name}
