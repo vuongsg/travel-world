@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CountryModel } from '../models/country';
 import { RootType } from '../store';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Grid, Paper, SnackbarContent, List, ListItem, ListItemIcon, ListItemText, ListItemAvatar } from '@material-ui/core';
+import { Container, Grid, Box, SnackbarContent, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
 import './Country.scss';
