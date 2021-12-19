@@ -146,7 +146,7 @@ export const Country = (): ReactElement => {
                             </Grid>
                             :
                             <Grid container direction="row">
-                                <Grid item sm={12} style={{ textAlign: 'center', margin: '0 auto', marginBottom: 30 }}>
+                                <Grid item sm={12} style={{ textAlign: 'center', margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
                                     <h1>{countryState.countries[countryState.selectedCountry].name}</h1>
                                 </Grid>
                                 <Grid container direction='row'>
