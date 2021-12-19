@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CountryModel } from '../models/country';
 import { RootType } from '../store';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Grid, Paper, SnackbarContent, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Container, Grid, Paper, SnackbarContent, List, ListItem, ListItemIcon, ListItemText, ListItemAvatar } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
 import './Country.scss';
@@ -99,7 +99,7 @@ export const Country = (): ReactElement => {
      */
     const renderCountriesList = () => {
         return (
-            <Paper id='paper-countries-list' style={{ maxHeight: 700, marginBottom: 30, overflow: 'auto' }}>
+            <Box id='paper-countries-list' style={{ maxHeight: 700, marginBottom: 30, overflow: 'auto' }}>
                 <List component="nav" aria-label="countries list">
                     <InfiniteScroll dataLength={countriesDisplay.length}
                         next={fetchCountriesMore}
@@ -108,17 +108,17 @@ export const Country = (): ReactElement => {
                         loader={<h4>Loading...</h4>}
                         scrollableTarget="paper-countries-list">
                         {countriesDisplay.map((m: CountryModel, index: number) =>
-                            <ListItem key={index} button selected={countryState.selectedCountry === index} 
+                            <ListItem key={index} alignItems='flex-start' button selected={countryState.selectedCountry === index} 
                                       onClick={(event) => handleSelectCountry(event, index)}>
-                                <ListItemIcon>
+                                <ListItemAvatar>
                                     <img src={m.flag} alt={m.name} style={{ maxWidth: 30, maxHeight: 30, objectFit: 'cover' }} />
-                                </ListItemIcon>
+                                </ListItemAvatar>
                                 <ListItemText primary={m.name} />
                             </ListItem>
                         )}
                     </InfiniteScroll>
                 </List>
-            </Paper>
+            </Box>
         )
     }
 
