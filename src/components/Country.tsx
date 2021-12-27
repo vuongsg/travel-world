@@ -7,6 +7,7 @@ import { Container, Grid, Box, SnackbarContent, List, ListItem, ListItemText, Li
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
 import './Country.scss';
+import { CountryInfo } from './CountryInfo';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -99,16 +100,16 @@ export const Country = (): ReactElement => {
      */
     const renderCountriesList = () => {
         return (
-            <Box id='paper-countries-list' style={{ maxHeight: 700, marginBottom: 30, overflow: 'auto' }}>
+            <Box id='box-countries-list' style={{ maxHeight: 700, marginBottom: 30, overflow: 'auto' }}>
                 <List component="nav" aria-label="countries list">
                     <InfiniteScroll dataLength={countriesDisplay.length}
                         next={fetchCountriesMore}
                         hasMore={hasData}
                         scrollThreshold={0.8}
                         loader={<h4>Loading...</h4>}
-                        scrollableTarget="paper-countries-list">
+                        scrollableTarget="box-countries-list">
                         {countriesDisplay.map((m: CountryModel, index: number) =>
-                            <ListItem key={index} alignItems='flex-start' button selected={countryState.selectedCountry === index} 
+                            <ListItem key={index} alignItems='flex-start' button selected={countryState.selectedIndex === index} 
                                       onClick={(event) => handleSelectCountry(event, index)}>
                                 <ListItemAvatar>
                                     <img src={m.flag} alt={m.name} style={{ maxWidth: 30, maxHeight: 30, objectFit: 'cover' }} />
@@ -131,7 +132,7 @@ export const Country = (): ReactElement => {
 
                 <Grid item sm={12} lg={9}>
                     {countryState.countries.length === 0 ? <div></div>
-                        : countryState.selectedCountry === -1 ?
+                        : countryState.selectedIndex === -1 ?
                             <Grid container direction='row'>
                                 <Grid item sm={12} className={classes.snackBarDiv}>
                                     <SnackbarContent
@@ -145,63 +146,9 @@ export const Country = (): ReactElement => {
                                 </Grid>
                             </Grid>
                             :
-                            <Grid container direction="row">
-                                <Grid item sm={12} style={{ textAlign: 'center', margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
-                                    <h1>{countryState.countries[countryState.selectedCountry].name}</h1>
-                                </Grid>
-                                <Grid container direction='row'>
-                                    <Grid item sm={12} lg={3} style={{ textAlign: 'center', margin:'0 auto', marginBottom: 30, paddingLeft: 30 }}>
-                                        <img src={countryState.countries[countryState.selectedCountry].flag} alt=''
-                                            style={{ width: '100%', maxWidth: 250, maxHeight: 250, objectFit: 'cover' }} />
-                                    </Grid>
-                                    <Grid item sm={12} lg={9} id='grid-info' style={{ lineHeight: 2, margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
-                                        <p>- Native name: {countryState.countries[countryState.selectedCountry].nativeName}</p>
-                                        <p>- Official name: {countryState.countries[countryState.selectedCountry].altSpellings.length > 1
-                                            ? countryState.countries[countryState.selectedCountry].altSpellings[1]
-                                            : countryState.countries[countryState.selectedCountry].altSpellings.length > 0
-                                                ? countryState.countries[countryState.selectedCountry].altSpellings[0]
-                                                : ''}</p>
-                                        <p>- Region: {countryState.countries[countryState.selectedCountry].subregion}</p>
-                                        <p>- Capital: {countryState.countries[countryState.selectedCountry].capital}</p>
-                                        <p>- {countryState.countries[countryState.selectedCountry].timezones.length > 1 ? 'Time zones' : 'Time zone'}:
-                                            <ul>
-                                                {countryState.countries[countryState.selectedCountry].timezones.map(m => <li>
-                                                    {m.endsWith(':00')
-                                                        ? m.substr(0, m.length - 3) : m}</li>)}
-                                            </ul>
-                                        </p>
-                                        <p>- {countryState.countries[countryState.selectedCountry].callingCodes.length > 1 ? 'Codes' : 'Code'}:
-                                            <ul>
-                                                {countryState.countries[countryState.selectedCountry].callingCodes.map(m => <li>+{m}</li>)}
-                                            </ul>
-                                        </p>
-                                        <p>- {countryState.countries[countryState.selectedCountry].languages.length > 1 ? 'Languages' : 'Language'}:
-                                            <ul>
-                                                {countryState.countries[countryState.selectedCountry].languages.map(m => <li>{m.name}</li>)}
-
-                                            </ul>
-                                        </p>
-                                        <p>- {countryState.countries[countryState.selectedCountry].currencies.length > 1 ? 'Currencies' : 'Currency'}:
-                                            <ul>
-                                                {countryState.countries[countryState.selectedCountry].currencies.map(m => <li>{m.name}</li>)}
-                                            </ul>
-                                        </p>
-                                        <p>- {countryState.countries[countryState.selectedCountry].borders.length > 1 ? 'Borders' : 'Border'}:
-                                            <ul>
-                                                {countryState.countries[countryState.selectedCountry].borders
-                                                                                                    .map(m => countryState.countries
-                                                                                                        .find(co => co.alpha3Code === m))
-                                                                                                    .map(m => <li>
-                                                                                                                <button className='btn-country-name' 
-                                                                                                                onClick={event => handleSelectCountryByName(event, m?.name)}>
-                                                                                                                    {m?.name}
-                                                                                                                </button>
-                                                                                                              </li>)}
-                                            </ul>
-                                        </p>
-                                    </Grid>
-                                </Grid>
-                            </Grid>}
+                            <CountryInfo country={countryState.countries[countryState.selectedIndex]}
+                                         lstCountries={countryState.countries}
+                                         onSelectCountryByName={handleSelectCountryByName} />}
                 </Grid>
             </Grid>
         </Container>

@@ -3,12 +3,12 @@ import { CountryModel } from "../models/country";
 
 export interface CountryState {
     countries: CountryModel[],
-    selectedCountry: number
+    selectedIndex: number
 }
 
 const initialState: CountryState = {
     countries: [],
-    selectedCountry: -1
+    selectedIndex: -1
 }
 
 const slice = createSlice({
@@ -24,7 +24,7 @@ const slice = createSlice({
         selectCountry: (state: CountryState, action: PayloadAction<number>) => {
             return {
                 ...state,
-                selectedCountry: action.payload
+                selectedIndex: action.payload
             }
         }
     }
