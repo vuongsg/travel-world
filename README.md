@@ -6,6 +6,7 @@ A place where you can travel online around the world ^_^
 
 ## API source
 <a href="https://restcountries.eu/rest/v2/" target="_blank">https://restcountries.eu/rest/v2/</a>
+Currently, this source API does not work well any longer.
 
 ## Installing
 ```
@@ -28,4 +29,5 @@ yarn start
 ## Technologies
 - React.js
 - Redux
+- Redux Toolkit
 - TypeScript
