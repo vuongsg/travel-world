@@ -43,14 +43,26 @@ export const Country = (): ReactElement => {
     const getCountriesList = async () => {
         let countries: CountryModel[] = [];
 
-        try {
-            const data = require('../countries.json');
+        /* try {
+            const data = require('../countries_v2.json');
             countries = Array.from(data);
         } catch (err) {
             console.log(err);
-            const response = await fetch('https://restcountries.eu/rest/v2/all');
+            const response = await fetch('https://restcountries.com/v3.1/all');
             const data = await response.json();
             countries = Array.from(data);
+        } */
+
+        try {
+            const response = await fetch('https://restcountries.com/v3.1/all');
+            const data = await response.json();
+            countries = Array.from(data);
+            countries.sort((a, b) => a.name.official.localeCompare(b.name.official));
+            console.log("Sorted countries", countries);
+        }
+        catch (err) {
+            console.log(err);
+            countries = [];
         }
         
         numberCountriesDisplaying = countries.length < 20 ? countries.length : 20;
@@ -87,7 +99,7 @@ export const Country = (): ReactElement => {
 
     const handleSelectCountryByName = (event: any, countryName: string | undefined) => {
         if (countryName && countryName !== '') {
-            const index = countryState.countries.findIndex(m => m.name === countryName);
+            const index = countryState.countries.findIndex(m => m.name.official === countryName);
             if (index !== -1) {
                 dispatch(selectCountry(index));
             }
@@ -112,9 +124,9 @@ export const Country = (): ReactElement => {
                             <ListItem key={index} alignItems='flex-start' button selected={countryState.selectedIndex === index} 
                                       onClick={(event) => handleSelectCountry(event, index)}>
                                 <ListItemAvatar>
-                                    <img src={m.flag} alt={m.name} style={{ maxWidth: 30, maxHeight: 30, objectFit: 'cover' }} />
+                                    <img src={m.flags.svg} alt={m.flags.alt} style={{ maxWidth: 30, maxHeight: 30, objectFit: 'cover' }} />
                                 </ListItemAvatar>
-                                <ListItemText primary={m.name} />
+                                <ListItemText primary={m.name.official} />
                             </ListItem>
                         )}
                     </InfiniteScroll>

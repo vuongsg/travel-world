@@ -144,7 +144,7 @@ export const NavBar = ():ReactElement => {
 
   const changeSearchText = (event: object, value: any, reason: any): void => {
     if (reason !== 'clear') {
-      dispatch(selectCountry(countryState.countries.findIndex(m => m.name === value)));
+      dispatch(selectCountry(countryState.countries.findIndex(m => m.name.official === value)));
     }
   }
 
@@ -164,7 +164,7 @@ export const NavBar = ():ReactElement => {
               <SearchIcon style={{color: '#000'}} />
             </div>
             <Autocomplete id="search-box"
-              options={countryState.countries.map(m => m.name)}
+              options={countryState.countries.map(m => m.name.official)}
               renderInput={(params) => (
                 <div ref={params.InputProps.ref}>
                   <input type='text' placeholder='Search...' style={{ width: 300, paddingLeft: 28, paddingTop: 8, paddingBottom: 8 }} 

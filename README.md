@@ -5,8 +5,7 @@ A place where you can travel online around the world ^_^
 <a href="https://travel-world-with-vuong.netlify.app/" target="_blank">https://travel-world-with-vuong.netlify.app/</a>
 
 ## API source
-<a href="https://restcountries.eu/rest/v2/" target="_blank">https://restcountries.eu/rest/v2/</a>
-Currently, this source API does not work well any longer.
+<a href="https://restcountries.com/v3.1/all" target="_blank">https://restcountries.com/v3.1/all</a>
 
 ## Installing
 ```
