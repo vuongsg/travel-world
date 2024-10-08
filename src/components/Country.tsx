@@ -43,26 +43,25 @@ export const Country = (): ReactElement => {
     const getCountriesList = async () => {
         let countries: CountryModel[] = [];
 
-        /* try {
-            const data = require('../countries_v2.json');
-            countries = Array.from(data);
-        } catch (err) {
-            console.log(err);
-            const response = await fetch('https://restcountries.com/v3.1/all');
-            const data = await response.json();
-            countries = Array.from(data);
-        } */
-
         try {
-            const response = await fetch('https://restcountries.com/v3.1/all');
-            const data = await response.json();
+            const data = require("../countries_v3.json");
             countries = Array.from(data);
-            countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
         }
         catch (err) {
             console.log(err);
-            countries = [];
+
+            try {
+                const response = await fetch('https://restcountries.com/v3.1/all');
+                const data = await response.json();
+                countries = Array.from(data);
+            }
+            catch (err2) {
+                console.log(err2);
+                countries = [];
+            }
         }
+
+        countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
         
         numberCountriesDisplaying = countries.length < 20 ? countries.length : 20;
         const temp: CountryModel[] = [];
