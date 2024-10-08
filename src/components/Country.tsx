@@ -57,8 +57,7 @@ export const Country = (): ReactElement => {
             const response = await fetch('https://restcountries.com/v3.1/all');
             const data = await response.json();
             countries = Array.from(data);
-            countries.sort((a, b) => a.name.official.localeCompare(b.name.official));
-            console.log("Sorted countries", countries);
+            countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
         }
         catch (err) {
             console.log(err);
@@ -99,7 +98,7 @@ export const Country = (): ReactElement => {
 
     const handleSelectCountryByName = (event: any, countryName: string | undefined) => {
         if (countryName && countryName !== '') {
-            const index = countryState.countries.findIndex(m => m.name.official === countryName);
+            const index = countryState.countries.findIndex(m => m.name.common === countryName);
             if (index !== -1) {
                 dispatch(selectCountry(index));
             }
@@ -126,7 +125,7 @@ export const Country = (): ReactElement => {
                                 <ListItemAvatar>
                                     <img src={m.flags.svg} alt={m.flags.alt} style={{ maxWidth: 30, maxHeight: 30, objectFit: 'cover' }} />
                                 </ListItemAvatar>
-                                <ListItemText primary={m.name.official} />
+                                <ListItemText primary={m.name.common} />
                             </ListItem>
                         )}
                     </InfiniteScroll>

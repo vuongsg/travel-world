@@ -1,24 +1,29 @@
-import { Route, Router, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.scss';
 import { About } from './components/About';
-import { Country } from './components/Country';
-import { NavBar } from './components/NavBar';
+import { Root } from './components/Root';
+import { Homepage } from './components/Homepage';
 
 function App() {
-  const history = createBrowserHistory();
+  const routers = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      children: [
+        {
+          index: true,
+          element: <Homepage />
+        },
+        {
+          path: "about",
+          element: <About />
+        }
+      ]
+    }
+  ])
 
   return (
-    <Router history={history}>
-      <div className="App">
-        <NavBar />
-
-        <Switch>
-          <Route path='/about' component={About} />
-          <Route path='/' component={Country} />
-        </Switch>
-      </div>
-    </Router>
+    <RouterProvider router={routers} />
   );
 }
 

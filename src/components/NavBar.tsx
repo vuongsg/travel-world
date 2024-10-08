@@ -7,7 +7,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { CountryState, selectCountry } from '../slices/country-slices'
 import { RootType } from '../store';
 import './NavBar.scss'
@@ -80,6 +80,12 @@ const useStyles = makeStyles((theme) => ({
   },
   iconButtonDesktop: {
     marginRight: 30
+  },
+  red: {
+    color: 'red'
+  },
+  white: {
+    color: 'white'
   }
 }));
 
@@ -124,19 +130,19 @@ export const NavBar = ():ReactElement => {
           open={isMobileMenuOpen} onClose={handleMobileMenuClose}>
       <MenuItem>
         <IconButton aria-label='Home'>
-          <Link to='/'>
+          <NavLink to='/'>
             <HomeIcon style={{color: '#000'}} />
             <h5>Home</h5>
-          </Link>
+          </NavLink>
         </IconButton>
       </MenuItem>
 
       <MenuItem>
         <IconButton aria-label='About'>
-          <Link to='/about'>
+          <NavLink to='/about'>
             <InfoIcon style={{color: '#000'}} />
             <h5>About</h5>
-          </Link>
+          </NavLink>
         </IconButton>
       </MenuItem>
     </Menu>
@@ -144,7 +150,7 @@ export const NavBar = ():ReactElement => {
 
   const changeSearchText = (event: object, value: any, reason: any): void => {
     if (reason !== 'clear') {
-      dispatch(selectCountry(countryState.countries.findIndex(m => m.name.official === value)));
+      dispatch(selectCountry(countryState.countries.findIndex(m => m.name.common === value)));
     }
   }
 
@@ -164,7 +170,7 @@ export const NavBar = ():ReactElement => {
               <SearchIcon style={{color: '#000'}} />
             </div>
             <Autocomplete id="search-box"
-              options={countryState.countries.map(m => m.name.official)}
+              options={countryState.countries.map(m => m.name.common)}
               renderInput={(params) => (
                 <div ref={params.InputProps.ref}>
                   <input type='text' placeholder='Search...' style={{ width: 300, paddingLeft: 28, paddingTop: 8, paddingBottom: 8 }} 
@@ -179,18 +185,18 @@ export const NavBar = ():ReactElement => {
 
           <div id='section-desktop' className={classes.sectionDesktop}>
             <IconButton aria-label='Home' className={classes.iconButtonDesktop}>
-              <Link to='/'>
+              <NavLink to='/' className={({isActive}) => isActive ? classes.red : classes.white}>
                 <Tooltip title='Home' placement='bottom' classes={{tooltip: classes.tooltip}}>
-                  <HomeIcon style={{color: '#fff'}} />
+                  <HomeIcon />
                 </Tooltip>
-              </Link>
+              </NavLink>
             </IconButton>
             <IconButton aria-label='About' className={classes.iconButtonDesktop}>
-              <Link to='/about'>
+              <NavLink to='/about' className={({isActive}) => isActive ? classes.red : classes.white}>
                 <Tooltip title='About' placement='bottom' classes={{tooltip: classes.tooltip}}>
-                  <InfoIcon style={{color: '#fff'}} />
+                  <InfoIcon />
                 </Tooltip>
-              </Link>
+              </NavLink>
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>

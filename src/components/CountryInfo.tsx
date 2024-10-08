@@ -13,15 +13,14 @@ export const CountryInfo: React.FC<ICountryProps> = (props) => {
     return (
         <Grid container direction="row">
             <Grid item sm={12} style={{ textAlign: 'center', margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
-                <h1>{country.name.official}</h1>
+                <h1>{country.name.common}</h1>
             </Grid>
             <Grid container direction='row'>
                 <Grid item sm={12} lg={3} style={{ textAlign: 'center', margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
                     <img src={country.flags.svg} alt={country.flags.alt} style={{ width: '100%', maxWidth: 250, maxHeight: 250, objectFit: 'cover' }} />
                 </Grid>
                 <Grid item sm={12} lg={9} id='grid-info' style={{ lineHeight: 2, margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
-                    <p>- Official name: {country.altSpellings.length > 1 ? country.altSpellings[1] 
-                                                                         : country.altSpellings.length > 0 ? country.altSpellings[0] : ''}</p>
+                    <p>- Official name: {country.name.official}</p>
                     <p>- Region: {country.subregion}</p>
                     <p>- Capital: {country.capital?.join(", ")}</p>
                     <p>- Area: {country.area}</p>
@@ -46,8 +45,8 @@ export const CountryInfo: React.FC<ICountryProps> = (props) => {
                         <ul>
                             {borders?.map(m => lstCountries.find(co => co.cca3 === m))
                                     .map(m => <li>
-                                                <button className='btn-country-name' onClick={event => onSelectCountryByName(event, m?.name.official)}>
-                                                    {m?.name.official}
+                                                <button className='btn-country-name' onClick={event => onSelectCountryByName(event, m?.name.common)}>
+                                                    {m?.name.common}
                                                 </button>
                                             </li>)}
                         </ul>
