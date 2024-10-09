@@ -8,7 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import { NavLink } from 'react-router-dom';
-import { CountryState, selectCountry } from '../slices/country-slices'
+import { ICountryState, selectCountry } from '../slices/country-slices'
 import { RootType } from '../store';
 import './NavBar.scss'
 
@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const NavBar = ():ReactElement => {
   const classes = useStyles();
-  const countryState = useSelector<RootType>(state => state.Country) as CountryState;
+  const countryState = useSelector<RootType>(state => state.country) as ICountryState;
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState(null);

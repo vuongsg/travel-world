@@ -5,7 +5,7 @@ import { RootType } from '../store';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Grid, Box, SnackbarContent, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { CountryState, getCountries, selectCountry } from '../slices/country-slices';
+import { ICountryState, setCountries, selectCountry } from '../slices/country-slices';
 import './Country.scss';
 import { CountryInfo } from './CountryInfo';
 
@@ -30,7 +30,7 @@ export const Country = (): ReactElement => {
     const [hasData, setData] = useState(true);
     const [countriesDisplay, setCountriesDisplay] = useState<CountryModel[]>([]);   //display in list countries
     const classes = useStyles();
-    let countryState = useSelector<RootType>(state => state.Country) as CountryState;
+    let countryState = useSelector<RootType>(state => state.country) as ICountryState;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -71,7 +71,7 @@ export const Country = (): ReactElement => {
         }
 
         setCountriesDisplay(temp);
-        dispatch(getCountries(countries));
+        dispatch(setCountries(countries));
     }
 
     const fetchCountriesMore = () => {
@@ -95,7 +95,7 @@ export const Country = (): ReactElement => {
         dispatch(selectCountry(index));
     }
 
-    const handleSelectCountryByName = (event: any, countryName: string | undefined) => {
+    const handleSelectCountryByName = (event: React.MouseEventHandler<HTMLButtonElement>, countryName: string | undefined) => {
         if (countryName && countryName !== '') {
             const index = countryState.countries.findIndex(m => m.name.common === countryName);
             if (index !== -1) {

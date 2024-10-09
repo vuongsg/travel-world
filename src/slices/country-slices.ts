@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CountryModel } from "../models/country";
 
-export interface CountryState {
+export interface ICountryState {
     countries: CountryModel[],
     selectedIndex: number
 }
 
-const initialState: CountryState = {
+const initialState: ICountryState = {
     countries: [],
     selectedIndex: -1
 }
@@ -15,13 +15,13 @@ const slice = createSlice({
     name: 'country',
     initialState: initialState,
     reducers: {
-        getCountries: (state: CountryState, action: PayloadAction<CountryModel[]>) => {
+        setCountries: (state: ICountryState, action: PayloadAction<CountryModel[]>) => {
             return {
                 ...state,
                 countries: action.payload
             }
         },
-        selectCountry: (state: CountryState, action: PayloadAction<number>) => {
+        selectCountry: (state: ICountryState, action: PayloadAction<number>) => {
             return {
                 ...state,
                 selectedIndex: action.payload
@@ -30,5 +30,5 @@ const slice = createSlice({
     }
 });
 
-export const { getCountries, selectCountry } = slice.actions;
+export const { setCountries, selectCountry } = slice.actions;
 export default slice.reducer;
