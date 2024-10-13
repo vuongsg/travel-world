@@ -17,7 +17,8 @@ export const CountryInfo: React.FC<ICountryProps> = (props) => {
             </Grid>
             <Grid container direction='row'>
                 <Grid item sm={12} lg={3} style={{ textAlign: 'center', margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
-                    <img src={country.flags.svg} alt={country.flags.alt} style={{ width: '100%', maxWidth: 250, maxHeight: 250, objectFit: 'cover' }} />
+                    <img src={country.flags.svg} alt={country.flags.alt} className="thumbnail" 
+                         style={{ width: '100%', maxWidth: 250, maxHeight: 250, objectFit: 'cover' }} />
                 </Grid>
                 <Grid item sm={12} lg={9} id='grid-info' style={{ lineHeight: 2, margin: '0 auto', marginBottom: 30, paddingLeft: 30 }}>
                     <p>- Official name: {country.name.official}</p>

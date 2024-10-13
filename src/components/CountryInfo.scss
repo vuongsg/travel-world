@@ -2,6 +2,24 @@
     margin-left: 50px;
 }
 
+.thumbnail {
+    width: 100%;
+    max-width: 270px;
+    max-height: 270px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.thumbnail:hover {
+    display: block;
+    position: relative;
+    top: 90px;
+    left: 175px;
+    transform: scale(3);
+    border: 3px solid lightgray;
+    z-index: 888;
+}
+
 @media screen and (max-width: 1280px) {
     #grid-info {
         padding-left: 40vw;
